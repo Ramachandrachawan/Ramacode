@@ -1,0 +1,61 @@
+Ext.define('NewExtApp.view.main.Main',, {
+    extend: 'Ext.grid.Panel',
+    xtype: 'expander-lockable',
+
+    title: 'Expander Rows in a Collapsible Grid with lockable columns',
+    width: 750,
+    height: 300,
+
+    collapsible: true,
+    animCollapse: false,
+    columnLines: true,
+    enableLocking: true,
+
+    store: {
+    //extend: 'Ext.data.Store',
+    //alias: 'store.companies',
+    //model: 'KitchenSink.model.Company',
+
+    autoLoad: true,
+    pageSize: null,
+
+    proxy: {
+        type: 'ajax',
+        url: ' classic/resources/data.json ',
+
+        reader: {
+            type: 'json',
+            rootProperty: 'data',
+
+            // Do not attempt to load orders inline.
+            // They are loaded through the proxy
+            implicitIncludes: false
+        }
+    }
+});
+columns: [{
+        text: "Company",
+        flex: 1,
+        dataIndex: 'name'
+    }, {
+        text: "Price",
+        formatter: 'usMoney',
+        width: 100,
+        dataIndex: 'price'
+    }, {
+        text: "Change",
+        width: 100,
+        dataIndex: 'priceChange'
+    }, {
+        text: "% Change",
+        width: 100,
+        dataIndex: 'priceChangePct'
+    }, {
+        text: "Last Updated",
+        width: 120,
+        formatter: 'date("m/d/Y")',
+        dataIndex: 'priceLastChange'
+    }],
+plugins: {
+        Ext.grid.plugin.RowExpander
+},
